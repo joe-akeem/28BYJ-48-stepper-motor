@@ -1,10 +1,11 @@
-#include "28BYJ48StepperMotor.hpp"
 #include <iostream>
 #include <ctime>
+#include <stdlib.h>
+#include "StepperMotor28BYJ48.hpp"
 
 using namespace std;
 
-const bool 28BYJ48StepperMotor::WAVE_DRIVE_MOTOR_SEQUENCE[][4] = {
+const bool StepperMotor28BYJ48::WAVE_DRIVE_MOTOR_SEQUENCE[][4] = {
 		{ LOW,  LOW,  LOW,  HIGH },
 		{ LOW,  LOW,  HIGH, LOW },
 		{ LOW,  HIGH, LOW,  LOW },
@@ -15,7 +16,7 @@ const bool 28BYJ48StepperMotor::WAVE_DRIVE_MOTOR_SEQUENCE[][4] = {
 		{ HIGH, LOW,  LOW,  LOW }
 };
 
-const bool 28BYJ48StepperMotor::FULL_STEP_MOTOR_SEQUENCE[][4] = {
+const bool StepperMotor28BYJ48::FULL_STEP_MOTOR_SEQUENCE[][4] = {
 		{ LOW,  LOW,  LOW,  HIGH },
 		{ LOW,  LOW,  HIGH, LOW },
 		{ LOW,  HIGH, LOW,  LOW },
@@ -26,7 +27,7 @@ const bool 28BYJ48StepperMotor::FULL_STEP_MOTOR_SEQUENCE[][4] = {
 		{ HIGH, LOW,  LOW,  LOW }
 };
 
-const bool 28BYJ48StepperMotor::HALF_STEP_MOTOR_SEQUENCE[][4] = {
+const bool StepperMotor28BYJ48::HALF_STEP_MOTOR_SEQUENCE[][4] = {
 		{ LOW,  LOW,  LOW,  HIGH },
 		{ LOW,  LOW,  HIGH, HIGH },
 		{ LOW,  LOW,  HIGH, LOW },
@@ -37,7 +38,7 @@ const bool 28BYJ48StepperMotor::HALF_STEP_MOTOR_SEQUENCE[][4] = {
 		{ HIGH, LOW,  LOW,  HIGH }
 };
 
-28BYJ48StepperMotor::28BYJ48StepperMotor(const unsigned int pinA, const unsigned int pinB, const unsigned int pinC,
+StepperMotor28BYJ48::StepperMotor28BYJ48(const unsigned int pinA, const unsigned int pinB, const unsigned int pinC,
 		const unsigned int pinD, const unsigned int stepDuration, const SteppingMethod steppingMethod)
 {
 	inputPins[0] = pinA;
@@ -53,15 +54,15 @@ const bool 28BYJ48StepperMotor::HALF_STEP_MOTOR_SEQUENCE[][4] = {
 	this->steppingMethod = steppingMethod;
 }
 
-void 28BYJ48StepperMotor::fullRotation(const int noOfRotations) {
+void StepperMotor28BYJ48::fullRotation(const int noOfRotations) {
 	halfRotation(2*noOfRotations);
 }
 
-void 28BYJ48StepperMotor::halfRotation(const int noOfHalfRotations) {
+void StepperMotor28BYJ48::halfRotation(const int noOfHalfRotations) {
 	quarterRotation(2*noOfHalfRotations);
 }
 
-void 28BYJ48StepperMotor::quarterRotation(const int noOfQuarterRotations) {
+void StepperMotor28BYJ48::quarterRotation(const int noOfQuarterRotations) {
 	switch (steppingMethod) {
 		case HALF_STEP:
 			step(2 * 512 * noOfQuarterRotations);
@@ -72,7 +73,7 @@ void 28BYJ48StepperMotor::quarterRotation(const int noOfQuarterRotations) {
 	}
 }
 
-void 28BYJ48StepperMotor::angleRotation(const float angle) {
+void StepperMotor28BYJ48::angleRotation(const float angle) {
 	int steps;
 	switch (steppingMethod) {
 		case HALF_STEP:
@@ -85,15 +86,15 @@ void 28BYJ48StepperMotor::angleRotation(const float angle) {
 	step(steps);
 }
 
-void 28BYJ48StepperMotor::setStepDurartion(const unsigned int stepDuration) {
+void StepperMotor28BYJ48::setStepDurartion(const unsigned int stepDuration) {
 	this->stepDuration = stepDuration;
 }
 
-void 28BYJ48StepperMotor::setSteppingMethod(const SteppingMethod steppingMethod) {
+void StepperMotor28BYJ48::setSteppingMethod(const SteppingMethod steppingMethod) {
 	this->steppingMethod = steppingMethod;
 }
 
-void 28BYJ48StepperMotor::step(const int noOfSteps) {
+void StepperMotor28BYJ48::step(const int noOfSteps) {
 	if (noOfSteps > 0) {
 		for (int currentStep = noOfSteps; currentStep > 0; currentStep--) {
 			int currentSequenceNo = currentStep % 8;
@@ -107,7 +108,7 @@ void 28BYJ48StepperMotor::step(const int noOfSteps) {
 	}
 }
 
-void 28BYJ48StepperMotor::writeSequence(const unsigned int sequenceNo) {
+void StepperMotor28BYJ48::writeSequence(const unsigned int sequenceNo) {
 	for (int i = 0; i < 4; i++) {
 		switch(steppingMethod) {
 			case WAVE_DRIVE:
@@ -127,7 +128,7 @@ void 28BYJ48StepperMotor::writeSequence(const unsigned int sequenceNo) {
 	}
 }
 
-void 28BYJ48StepperMotor::performDemo() {
+void StepperMotor28BYJ48::performDemo() {
 	clock_t begin, end;
 
 	cout << "Full rotation clockwise in wave drive method with stepDuration=3ms... " << endl;

@@ -12,7 +12,7 @@
  *
  * @see <http://wiringpi.com/>
  */
-class 28BYJ48StepperMotor {
+class StepperMotor28BYJ48 {
 public:
 
 	/**
@@ -34,7 +34,7 @@ public:
 	 * @param steppingmethod - the stepping method to be used by the motor
 	 *
 	 */
-	28BYJ48StepperMotor(const unsigned int pinA, const unsigned int pinB, const unsigned int pinC,
+	StepperMotor28BYJ48(const unsigned int pinA, const unsigned int pinB, const unsigned int pinC,
 			const unsigned int pinD, const unsigned int stepDuration, const SteppingMethod steppingMethod = HALF_STEP);
 
 	/**
