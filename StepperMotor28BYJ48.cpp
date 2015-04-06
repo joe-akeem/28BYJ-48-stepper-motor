@@ -131,60 +131,52 @@ void StepperMotor28BYJ48::writeSequence(const unsigned int sequenceNo) {
 void StepperMotor28BYJ48::performDemo() {
 	clock_t begin, end;
 
-	cout << "Full rotation clockwise in wave drive method with stepDuration=3ms... " << endl;
+	cout << "Full rotation clockwise in wave drive method... " << endl;
 	begin = clock();
 	setSteppingMethod(WAVE_DRIVE);
-	setStepDurartion(3);
 	fullRotation(1);
 	end = clock();
 	cout << "(took " << (end - begin) << ")" << endl;
 
-	cout << "Full rotation counterclockwise in full step method with stepDuration=3ms... " << endl;
+	cout << "Full rotation counterclockwise in full step method... " << endl;
 	begin = clock();
 	setSteppingMethod(FULL_STEP);
-	setStepDurartion(3);
 	fullRotation(-1);
 	end = clock();
 	cout << "(took " << (end - begin) << ")" << endl;
 
-	cout << "Full rotation clockwise in half step method with stepDuration=3ms... " << endl;
+	cout << "Full rotation clockwise in half step method... " << endl;
 	begin = clock();
 	setSteppingMethod(HALF_STEP);
-	setStepDurartion(3);
 	fullRotation(1);
 	end = clock();
 	cout << "(took " << (end - begin) << ")" << endl;
 
-	cout << "Half rotation counterclockwise in full step method with stepDuration=3ms... " << endl;
+	cout << "Half rotation counterclockwise in full step method... " << endl;
 	begin = clock();
 	setSteppingMethod(FULL_STEP);
-	setStepDurartion(3);
 	halfRotation(-1);
 	end = clock();
 	cout << "(took " << (end - begin) << ")" << endl;
 
-	cout << "Quarter rotation clockwise in full step method with stepDuration=3ms... " << endl;
+	cout << "Quarter rotation clockwise in full step method... " << endl;
 	begin = clock();
 	setSteppingMethod(FULL_STEP);
-	setStepDurartion(3);
 	quarterRotation(1);
 	end = clock();
 	cout << "(took " << (end - begin) << ")" << endl;
 
-	cout << "180 degree rotation counterclockwise in full step method with stepDuration=3ms... " << endl;
+	cout << "180 degree rotation counterclockwise in full step method... " << endl;
 	begin = clock();
 	setSteppingMethod(FULL_STEP);
-	setStepDurartion(3);
 	angleRotation(-180);
 	end = clock();
 	cout << "(took " << (end - begin) << ")" << endl;
 
-	cout << "90 degree rotation clockwise in half step method with stepDuration=3ms... " << endl;
+	cout << "90 degree rotation clockwise in half step method... " << endl;
 	begin = clock();
 	setSteppingMethod(HALF_STEP);
-	setStepDurartion(3);
 	angleRotation(270);
 	end = clock();
 	cout << "(took " << (end - begin) << ")" << endl;
 }
-
