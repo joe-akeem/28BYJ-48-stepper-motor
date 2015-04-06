@@ -4,11 +4,13 @@ LDFLAGS= -shared
 
 OBJS =		StepperMotor28BYJ48.o
 
+INCLUDES = StepperMotor28BYJ48.hpp
+
 LIBS = -lwiringPi
 
 TARGET =	libStepperMotor28BYJ48.so
 
-PREFIX=/usr/local
+PREFIX=/usr
 
 $(TARGET):	$(OBJS)
 	$(CXX) -o $@ $(LDFLAGS) $(OBJS) $(LIBS)
@@ -20,3 +22,4 @@ clean:
 
 install: $(TARGET)
 	install -m 0755 $(TARGET) $(PREFIX)/lib
+	install -m 0755 $(INCLUDES) $(PREFIX)/include
