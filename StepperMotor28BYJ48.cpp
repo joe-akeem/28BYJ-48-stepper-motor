@@ -52,6 +52,8 @@ StepperMotor28BYJ48::StepperMotor28BYJ48(const unsigned int pinA, const unsigned
 
 	this->stepDuration = stepDuration;
 	this->steppingMethod = steppingMethod;
+
+	started = false;
 }
 
 void StepperMotor28BYJ48::fullRotation(const int noOfRotations) {
@@ -125,6 +127,36 @@ void StepperMotor28BYJ48::writeSequence(const unsigned int sequenceNo) {
 	delay(stepDuration);
 	for (int i = 0; i < 4; i++) {
 		digitalWrite(inputPins[i], LOW);
+	}
+}
+
+void StepperMotor28BYJ48::startClockwise() {
+	if (started) {
+		stop();
+	}
+	started = true;
+	motorThread = new thread(&StepperMotor28BYJ48::start, this, 5);
+}
+
+void StepperMotor28BYJ48::startCounterClockwise() {
+	if (started) {
+		stop();
+	}
+	started = true;
+	motorThread = new thread(&StepperMotor28BYJ48::start, this, -5);
+}
+
+void StepperMotor28BYJ48::start(const int direction) {
+	while (started) {
+		step(direction);
+	}
+}
+
+void StepperMotor28BYJ48::stop() {
+	if (started) {
+		started = false;
+		motorThread->join();
+		delete(motorThread);
 	}
 }
 

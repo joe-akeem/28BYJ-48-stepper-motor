@@ -1,6 +1,8 @@
 #ifndef STEPPER_MOTOR_HPP
 #define STEPPER_MOTOR_HPP
 
+#include <atomic>
+#include <thread>
 #include <wiringPi.h>
 
 /**
@@ -14,7 +16,7 @@
  */
 class StepperMotor28BYJ48 {
 public:
-
+#include <thread>
 	/**
 	 * The stepping method to be used by the motor.
 	 * @see <https://www.youtube.com/watch?v=B86nqDRskVU>
@@ -96,6 +98,22 @@ public:
 	void step(const int noOfSteps);
 
 	/**
+	 * Starts rotating the motor clockwise until stop is called.
+	 */
+	void startClockwise();
+
+	/**
+	 * Starts rotating the motor clockwise until stop is called.
+	 */
+	void startCounterClockwise();
+
+	/**
+	 * Stops the motor. Calling this method when the motor has
+	 * already stopped won't have any effect.
+	 */
+	void stop();
+
+	/**
 	 * Performs a demo of the various methods to move the motor.
 	 */
 	void performDemo();
@@ -118,6 +136,20 @@ private:
 
 	/** The current stepping method of this motor **/
 	SteppingMethod steppingMethod;
+
+	/** Indicates if the motor is started or not. **/
+	std::atomic<bool> started;
+
+	/** A thread that is used when the motor is started and stopped. **/
+	std::thread* motorThread;
+
+	/**
+	 * Starts the motor in a loop until stop() is called.
+	 *
+	 * @param direction - the direction to move the motor. If positive the motor
+	 *	 	  will rotate clockwise, if negative it will rotate counterclockwise.
+	 */
+	void start(const int direction);
 
 	/**
 	 * Writes the motor sequence to the Raspberry Pi pins.
