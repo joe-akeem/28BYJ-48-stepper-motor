@@ -118,6 +118,11 @@ public:
 	 */
 	void performDemo();
 
+	/**
+	 * Returns true if this motor currently is started, false otherwise.
+	 */
+	bool isStarted();
+
 private:
 	/** The motor sequence for the wave drive stepping method. **/
 	static const bool WAVE_DRIVE_MOTOR_SEQUENCE[][4];

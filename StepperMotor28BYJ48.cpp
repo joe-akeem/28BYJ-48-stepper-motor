@@ -160,6 +160,10 @@ void StepperMotor28BYJ48::stop() {
 	}
 }
 
+bool StepperMotor28BYJ48::isStarted() {
+	return started;
+}
+
 void StepperMotor28BYJ48::performDemo() {
 	clock_t begin, end;
 
